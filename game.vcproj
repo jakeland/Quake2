@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="game"
-	ProjectGUID="{807F4D6A-7EF7-42B8-B615-CDD255100534}"
+	Name="gamex86"
+	ProjectGUID="{68AF2B9A-62BA-476C-A1CC-975476B1460C}"
 	RootNamespace="game"
 	TargetFrameworkVersion="0"
 	>
@@ -211,7 +211,7 @@
 		<Configuration
 			Name="Debug Alpha|Win32"
 			OutputDirectory="..\baseq2"
-			IntermediateDirectory=".\DebugAxp"
+			IntermediateDirectory="..\baseq2"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
 			UseOfMFC="0"
@@ -246,7 +246,7 @@
 				RuntimeLibrary="1"
 				PrecompiledHeaderFile=".\DebugAxp/game.pch"
 				AssemblerListingLocation=".\DebugAxp/"
-				ObjectFile=".\DebugAxp/"
+				ObjectFile="..\baseq2/"
 				ProgramDataBaseFileName=".\DebugAxp/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
@@ -265,7 +265,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="..\DebugAxp/gameaxp.dll"
+				OutputFile="..\baseq2/gamex86.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				ModuleDefinitionFile=".\game.def"
