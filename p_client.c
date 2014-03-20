@@ -377,7 +377,14 @@ void ClientObituary (edict_t *self, edict_t *inflictor, edict_t *attacker)
 					if (ff)
 						attacker->client->resp.score--;
 					else
+					{
 						attacker->client->resp.score++;
+					//JMC  Added to increase player level per kill.
+						if (attacker->client->resp.p_level < 5){
+						attacker->client->resp.p_level++;
+						//gi.bprintf (PRINT_MEDIUM, "%s Reached Level %s \n", attacker->client->pers.netname, attacker->client->resp.p_level); 
+						}
+					}
 				}
 				return;
 			}
@@ -594,20 +601,31 @@ void InitClientPersistant (gclient_t *client)
 	gitem_t		*item;
 
 	memset (&client->pers, 0, sizeof(client->pers));
-	
+	//JMC Added to spawn with guns and ammo
 	item = FindItem("Bullets");
 	client->pers.selected_item = ITEM_INDEX(item);
-	client->pers.inventory[client->pers.selected_item] = 30;
+	client->pers.inventory[client->pers.selected_item] = 100;
+	
+	item = FindItem("Shells");
+	client->pers.selected_item = ITEM_INDEX(item);
+	client->pers.inventory[client->pers.selected_item] = 25;
+	item = FindItem("Machinegun");
+	client->pers.selected_item = ITEM_INDEX(item);
+	client->pers.inventory[client->pers.selected_item] = 1;
+
+	item = FindItem("Shotgun");
+	client->pers.selected_item = ITEM_INDEX(item);
+	client->pers.inventory[client->pers.selected_item] = 1;
 
 	item = FindItem("Pistol");
 	client->pers.selected_item = ITEM_INDEX(item);
 	client->pers.inventory[client->pers.selected_item] = 1;
-
+	
 	client->pers.weapon = item;
 
 	client->pers.health			= 100;
 	client->pers.max_health		= 100;
-
+	
 	client->pers.max_bullets	= 200;
 	client->pers.max_shells		= 100;
 	client->pers.max_rockets	= 50;
@@ -649,6 +667,7 @@ void SaveClientData (void)
 		game.clients[i].pers.health = ent->health;
 		game.clients[i].pers.max_health = ent->max_health;
 		game.clients[i].pers.savedFlags = (ent->flags & (FL_GODMODE|FL_NOTARGET|FL_POWER_ARMOR));
+		
 		if (coop->value)
 			game.clients[i].pers.score = ent->client->resp.score;
 	}
@@ -1277,9 +1296,11 @@ void ClientBeginDeathmatch (edict_t *ent)
 	}
 
 	gi.bprintf (PRINT_HIGH, "%s entered the game\n", ent->client->pers.netname);
-
+	
 	// make sure all view stuff is valid
 	ClientEndServerFrame (ent);
+	ent->client->resp.p_level = 1;
+	
 }
 
 
@@ -1294,12 +1315,16 @@ to be placed into the game.  This will happen every level load.
 void ClientBegin (edict_t *ent)
 {
 	int		i;
+	
+	//JAMC added to give people a level upon entering the game.
+	ent->client->resp.p_level = 1;
 
 	ent->client = game.clients + (ent - g_edicts - 1);
-
+	
 	if (deathmatch->value)
 	{
 		ClientBeginDeathmatch (ent);
+		
 		return;
 	}
 

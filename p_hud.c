@@ -324,6 +324,7 @@ Cmd_Help_f
 Display the current help message
 ==================
 */
+
 void Cmd_Help_f (edict_t *ent)
 {
 	// this is for backwards compatability
@@ -347,6 +348,13 @@ void Cmd_Help_f (edict_t *ent)
 	HelpComputer (ent);
 }
 
+//JAMC added for level checks
+
+void Cmd_Curr_Level_f (edict_t *ent)
+{
+gi.bprintf(PRINT_MEDIUM," %s current level is %d \n", ent->client->pers.netname, ent->client->resp.p_level);
+return;
+}
 
 //=======================================================================
 

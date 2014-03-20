@@ -587,6 +587,7 @@ extern	gitem_t	itemlist[];
 // g_cmds.c
 //
 void Cmd_Help_f (edict_t *ent);
+void Cmd_Curr_Level_f (edict_t *ent);
 void Cmd_Score_f (edict_t *ent);
 
 //
@@ -828,6 +829,8 @@ typedef struct
 	int			max_health;
 	int			savedFlags;
 
+
+
 	int			selected_item;
 	int			inventory[MAX_ITEMS];
 
@@ -838,6 +841,8 @@ typedef struct
 	int			max_grenades;
 	int			max_cells;
 	int			max_slugs;
+	//JMC added to keep track of players level;
+	int			p_level;
 
 	gitem_t		*weapon;
 	gitem_t		*lastweapon;
@@ -858,7 +863,11 @@ typedef struct
 	int			enterframe;			// level.framenum the client entered the game
 	int			score;				// frags, etc
 	vec3_t		cmd_angles;			// angles sent over in the last command
+	//JMC added for player levels
+	int			p_level;
+	
 
+	
 	qboolean	spectator;			// client is a spectator
 } client_respawn_t;
 

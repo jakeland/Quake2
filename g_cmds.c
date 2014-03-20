@@ -921,6 +921,12 @@ void ClientCommand (edict_t *ent)
 		return;
 	}
 
+	if (Q_stricmp (cmd, "p_level") == 0)
+	{
+		Cmd_Curr_Level_f (ent);
+		return;
+	}
+
 	if (level.intermissiontime)
 		return;
 
