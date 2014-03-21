@@ -1,5 +1,8 @@
 #include "g_local.h"
 #include "m_player.h"
+#include "doublejump.h"
+//
+
 
 void ClientUserinfoChanged (edict_t *ent, char *userinfo);
 
@@ -1612,6 +1615,46 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	}
 
 	pm_passent = ent;
+	
+	//JMC All this below deals with Dbl-Jumping
+
+	
+if (ent->groundentity)
+{
+  ent->timestamp = level.time;
+  ent->max_jump_count = ent->client->resp.p_level;
+  ent->jump_count = ent->max_jump_count;
+}
+  if (!ent->groundentity && !ent->dbljumped && ucmd->upmove > 10)
+{
+  if (level.time - ent->timestamp >= 0.35) // Time after jump to dbl-jump
+  {
+    // Play sound
+    gi.sound(ent, CHAN_VOICE, gi.soundindex("world/x_light.wav"), 1, ATTN_NORM, 0);
+
+    ent->client->blue_alpha = 0.5;
+    Float_ModVelocity(ent, 0, 0, 250);
+
+    // Init the vars
+	if(ent->jump_count != 0)
+	{
+    ent->dbljumped = false;
+    
+	ent->jump_count--;
+	}
+	else
+	{
+		ent->dbljumped = true;
+		ent->timestamp = 0;
+	}
+  }
+}
+
+if (ent->groundentity && ent->dbljumped == true)
+  ent->dbljumped = false;
+
+
+
 
 	if (ent->client->chase_target) {
 

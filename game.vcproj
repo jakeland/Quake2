@@ -2138,6 +2138,10 @@
 			Filter="h;hpp;hxx;hm;inl;fi;fd"
 			>
 			<File
+				RelativePath=".\doublejump.h"
+				>
+			</File>
+			<File
 				RelativePath="g_local.h"
 				>
 			</File>

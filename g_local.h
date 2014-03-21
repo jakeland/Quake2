@@ -925,7 +925,7 @@ struct gclient_s
 	float		next_drown_time;
 	int			old_waterlevel;
 	int			breather_sound;
-
+	
 	int			machinegun_shots;	// for weapon raising
 
 	// animation vars
@@ -955,6 +955,9 @@ struct gclient_s
 
 	edict_t		*chase_target;		// player we are chasing
 	qboolean	update_chase;		// need to update chase info?
+
+	//JMC added for double Jump
+	int blue_alpha;
 };
 
 
@@ -1105,5 +1108,11 @@ struct edict_s
 	// common data blocks
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
+	//JMC added for double jumps
+	qboolean	 dbljumped;
+
+	int			max_jump_count;
+	int			jump_count;
+	
 };
 

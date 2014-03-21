@@ -1532,8 +1532,8 @@ void Weapon_BFG (edict_t *ent)
 		//Calculate the kick angles
 		for (i=1 ; i<3 ; i++)
 		{
-			ent->client->kick_origin[i] = crandom() * 0.35;
-			ent->client->kick_angles[i] = crandom() * 0.7;
+			ent->client->kick_origin[i] = crandom() * 0.25;
+			ent->client->kick_angles[i] = crandom() * 0.6;
 		}
 		ent->client->kick_origin[0] = crandom() * 0.35;
 		ent->client->kick_angles[0] = ent->client->machinegun_shots * -1.5;
@@ -1545,24 +1545,9 @@ void Weapon_BFG (edict_t *ent)
 		P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);	
 
 	
-		//BD 3/4 - Added to animate last round firing...
-		// Don't worry about this now. We'll come back to it later.
-		//if (ent->client->pers.inventory[ent->client->ammo_index] == 1 || (ent->client->Mk23_rds == 1))
-		//{
-			//Hard coded for reload only.
-			//ent->client->ps.gunframe=64;
-			//ent->client->weaponstate = WEAPON_END_MAG;
-			//fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD,MOD_Mk23);
-			//ent->client->Mk23_rds--;
-		//}
-		//else
-		//{
-			//If no reload, fire normally.
+		
 			fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_PISTOL);
-			//ent->client->Mk23_rds--;
-		//}
-		
-		
+				
 	
 
 		//Display the yellow muzzleflash light effect

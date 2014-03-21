@@ -1539,6 +1539,7 @@ always owned, never in the world
 			1,
 			"Bullets",
 			IT_WEAPON,
+			0,
 			NULL,
 			0,
 			""
