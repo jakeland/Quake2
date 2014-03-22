@@ -1,5 +1,6 @@
 #include "g_local.h"
 #include "m_player.h"
+#include "dash_vel.h"
 
 
 char *ClientTeam (edict_t *ent)
@@ -849,6 +850,113 @@ void Cmd_Say_f (edict_t *ent, qboolean team, qboolean arg0)
 		gi.cprintf(other, PRINT_CHAT, "%s", text);
 	}
 }
+//JAMC added for dash function
+/* not sure this is going to work, setting it aside for now.
+void Cmd_Dash_f(edict_t *ent)
+{
+	
+	ent->client->pers.max_dash_time = 5 * ent->client->resp.p_level;
+	if(!ent->cant_dash)
+	{
+		ent->current_dash = ent->client->pers.max_dash_time;
+	for (ent->current_dash; ent->current_dash--; ent->current_dash > 0)
+	{
+		
+	}
+	ent->cant_dash = true;
+	ent->timestamp = level.time;
+	}
+	else
+	{
+		if(level.time - ent->timestamp == 3)
+		{
+			ent->cant_dash = false;
+		}
+	}
+
+}
+
+*/
+
+//JAMC added for ammo regen
+void Cmd_Ammo_Regen_f(edict_t *ent)
+{
+	int timer;
+	
+		gitem_t		*item;
+	
+	if(!ent->cant_regen)
+	{
+
+	//JMC Added to spawn ammo
+	item = FindItem("Bullets");
+	ent->client->pers.selected_item = ITEM_INDEX(item);
+	ent->client->pers.inventory[ent->client->pers.selected_item] = ent->client->pers.inventory[ent->client->pers.selected_item]+ (10 * ent->client->resp.p_level);
+	
+	item = FindItem("Shells");
+	ent->client->pers.selected_item = ITEM_INDEX(item);
+	ent->client->pers.inventory[ent->client->pers.selected_item] = ent->client->pers.inventory[ent->client->pers.selected_item] + (2 * ent->client->resp.p_level);
+
+	
+	ent->time_regen = level.time;
+	ent->cant_regen = true;
+	return;
+	}
+	if(ent->cant_regen)
+	{
+	if(level.time - ent->time_regen >= 20)
+	{
+		ent->cant_regen = false;
+		return;
+	}
+	else
+	{
+		timer = 20 - (level.time - ent->time_regen);
+		gi.cprintf (ent, PRINT_HIGH, "Can't regen ammo for %d more seconds\n", timer);
+		return;
+	}
+	}
+}
+//JAMC added for armor regen
+void Cmd_Armor_Regen_f(edict_t *ent)
+{
+	
+	
+	int timer;
+	
+		
+	
+	if(!ent->cant_armor)
+	{
+		int currenthealth = ent->health;
+		int healthgain = 25;
+
+		if (currenthealth + healthgain >= 100)
+		ent->health = 100;
+		else
+			ent->health+= 25;
+	
+	ent->time_armor = level.time;
+	ent->cant_armor = true;
+	return;
+	}
+	if(ent->cant_armor)
+	{
+	if(level.time - ent->time_armor >= (30 * ent->client->resp.p_level))
+	{
+		ent->cant_armor = false;
+		return;
+	}
+	else
+	{
+		timer = 30 - (level.time - ent->time_armor);
+		gi.cprintf (ent, PRINT_HIGH, "Can't regen health for %d more seconds\n", timer);
+		return;
+	}
+	
+	}
+	
+}
 
 void Cmd_PlayerList_f(edict_t *ent)
 {
@@ -920,12 +1028,31 @@ void ClientCommand (edict_t *ent)
 		Cmd_Help_f (ent);
 		return;
 	}
-
+	//JAMC added for extra commands
 	if (Q_stricmp (cmd, "p_level") == 0)
 	{
 		Cmd_Curr_Level_f (ent);
 		return;
 	}
+
+	if (Q_stricmp (cmd, "regen_ammo") == 0)
+	{
+		Cmd_Ammo_Regen_f (ent);
+		return;
+	}
+	if (Q_stricmp (cmd, "regen_armor") == 0)
+	{
+		Cmd_Armor_Regen_f (ent);
+		return;
+	}
+/*
+	if (Q_stricmp (cmd, "dash") == 0)
+	{
+		Cmd_Dash_f (ent);
+		return;
+	}
+*/
+
 
 	if (level.intermissiontime)
 		return;

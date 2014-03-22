@@ -1369,9 +1369,14 @@ always owned, never in the world
 		Use_Weapon,
 		Drop_Weapon,
 		Weapon_Chaingun,
+		/*JAMC
 		"misc/w_pkup.wav",
 		"models/weapons/g_chain/tris.md2", EF_ROTATE,
 		"models/weapons/v_chain/tris.md2",
+		*/
+		"misc/w_pkup.wav",
+		"models/weapons/g_shotg/tris.md2", EF_ROTATE,
+		"models/weapons/v_shotg/tris.md2",
 /* icon */		"w_chaingun",
 /* pickup */	"Chaingun",
 		0,
@@ -1415,9 +1420,14 @@ always owned, never in the world
 		Use_Weapon,
 		Drop_Weapon,
 		Weapon_GrenadeLauncher,
+		/*JMC commented out for ease of returning 
 		"misc/w_pkup.wav",
 		"models/weapons/g_launch/tris.md2", EF_ROTATE,
 		"models/weapons/v_launch/tris.md2",
+		*/
+		"misc/w_pkup.wav",
+		"models/weapons/g_machn/tris.md2", EF_ROTATE,
+		"models/weapons/v_machn/tris.md2",
 /* icon */		"w_glauncher",
 /* pickup */	"Grenade Launcher",
 		0,
@@ -1438,9 +1448,14 @@ always owned, never in the world
 		Use_Weapon,
 		Drop_Weapon,
 		Weapon_RocketLauncher,
+		/*
 		"misc/w_pkup.wav",
 		"models/weapons/g_rocket/tris.md2", EF_ROTATE,
 		"models/weapons/v_rocket/tris.md2",
+		*/
+		"misc/w_pkup.wav",
+		"models/weapons/g_machn/tris.md2", EF_ROTATE,
+		"models/weapons/v_machn/tris.md2",
 /* icon */		"w_rlauncher",
 /* pickup */	"Rocket Launcher",
 		0,

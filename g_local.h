@@ -587,6 +587,7 @@ extern	gitem_t	itemlist[];
 // g_cmds.c
 //
 void Cmd_Help_f (edict_t *ent);
+//JMC added cmd for checking level;
 void Cmd_Curr_Level_f (edict_t *ent);
 void Cmd_Score_f (edict_t *ent);
 
@@ -841,9 +842,7 @@ typedef struct
 	int			max_grenades;
 	int			max_cells;
 	int			max_slugs;
-	//JMC added to keep track of players level;
-	int			p_level;
-
+	
 	gitem_t		*weapon;
 	gitem_t		*lastweapon;
 
@@ -854,6 +853,14 @@ typedef struct
 	int			helpchanged;
 
 	qboolean	spectator;			// client is a spectator
+	//JMC added to keep track of players level;
+	int			p_level;
+	//added to keep track of armor regen
+	int			max_armor_regen;
+	int			max_bullet_regen;
+	int			max_shell_regen;
+	int			max_jump;
+	int			max_dash_time;
 } client_persistant_t;
 
 // client data that stays across deathmatch respawns
@@ -1113,6 +1120,16 @@ struct edict_s
 
 	int			max_jump_count;
 	int			jump_count;
-	
+	int			current_dash;
+	int			current_shells_regen;
+	int			current_bullet_regen;
+	int			current_armor_regen;
+	qboolean		cant_dash;
+	qboolean		cant_regen;
+	qboolean		cant_armor;
+	qboolean		notdashing;
+	float		time_armor;
+	float		time_dash;
+	float		time_regen;
 };
 

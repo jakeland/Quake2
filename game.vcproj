@@ -2138,6 +2138,10 @@
 			Filter="h;hpp;hxx;hm;inl;fi;fd"
 			>
 			<File
+				RelativePath=".\dash_vel.h"
+				>
+			</File>
+			<File
 				RelativePath=".\doublejump.h"
 				>
 			</File>

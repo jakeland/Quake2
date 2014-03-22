@@ -737,6 +737,8 @@ GRENADE LAUNCHER
 
 void weapon_grenadelauncher_fire (edict_t *ent)
 {
+
+	
 	vec3_t	offset;
 	vec3_t	forward, right;
 	vec3_t	start;
@@ -767,14 +769,23 @@ void weapon_grenadelauncher_fire (edict_t *ent)
 
 	if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
 		ent->client->pers.inventory[ent->client->ammo_index]--;
+	
 }
 
 void Weapon_GrenadeLauncher (edict_t *ent)
 {
+	//JMC code illustrating weaponmod
+	static int	pause_frames[]	= {23, 45, 0};
+	static int	fire_frames[]	= {4, 5, 0};
+
+	Weapon_Generic (ent, 3, 5, 45, 49, pause_frames, fire_frames, weapon_grenadelauncher_fire,NULL,NULL,false);
+
+	/*JMC commented out for ease of remembering what old code was
 	static int	pause_frames[]	= {34, 51, 59, 0};
 	static int	fire_frames[]	= {6, 0};
 
 	Weapon_Generic (ent, 5, 16, 59, 64, pause_frames, fire_frames, weapon_grenadelauncher_fire,NULL,NULL, false);
+	*/
 }
 
 /*
@@ -787,6 +798,7 @@ ROCKET
 
 void Weapon_RocketLauncher_Fire (edict_t *ent)
 {
+	
 	vec3_t	offset, start;
 	vec3_t	forward, right;
 	int		damage;
@@ -823,14 +835,24 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 
 	if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
 		ent->client->pers.inventory[ent->client->ammo_index]--;
+	
 }
 
 void Weapon_RocketLauncher (edict_t *ent)
 {
+
+	//JMC added for rocket launcher machinegun
+	static int	pause_frames[]	= {23, 45, 0};
+	static int	fire_frames[]	= {4, 5, 0};
+
+	Weapon_Generic (ent, 3, 5, 45, 49, pause_frames, fire_frames, Weapon_RocketLauncher_Fire,NULL,NULL,false);
+	/*JMC commented out for ease of remembering what old code was
 	static int	pause_frames[]	= {25, 33, 42, 50, 0};
 	static int	fire_frames[]	= {5, 0};
 
 	Weapon_Generic (ent, 4, 12, 50, 54, pause_frames, fire_frames, Weapon_RocketLauncher_Fire,NULL,NULL,false);
+	*/
+
 }
 
 
@@ -844,6 +866,7 @@ BLASTER / HYPERBLASTER
 
 void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyper, int effect)
 {
+	/*JMC commented out for ease of remembering what old code was
 	vec3_t	forward, right;
 	vec3_t	start;
 	vec3_t	offset;
@@ -884,7 +907,7 @@ void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyper, in
 
 	fire_blaster (ent, start, forward, damage, 1000, effect, hyper);
 	
-*/
+//
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
 	gi.WriteShort (ent-g_edicts);
@@ -895,11 +918,14 @@ void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyper, in
 	gi.multicast (ent->s.origin, MULTICAST_PVS);
 
 	PlayerNoise(ent, start, PNOISE_WEAPON);
+
+	*/
 }
 
 
 void Weapon_Blaster_Fire (edict_t *ent)
 {
+	/*JMC commented out for ease of remembering what old code was
 	int		damage;
 
 	if (deathmatch->value)
@@ -908,19 +934,23 @@ void Weapon_Blaster_Fire (edict_t *ent)
 		damage = 10;
 	Blaster_Fire (ent, vec3_origin, damage, false, EF_BLASTER);
 	ent->client->ps.gunframe++;
+	*/
 }
 
 void Weapon_Blaster (edict_t *ent)
 {
+	/*JMC commented out for ease of remembering what old code was
 	static int	pause_frames[]	= {19, 32, 0};
 	static int	fire_frames[]	= {5, 0};
 
 	Weapon_Generic (ent, 4, 8, 52, 55, pause_frames, fire_frames, Weapon_Blaster_Fire,NULL,NULL,false);
+	*/
 }
 
 
 void Weapon_HyperBlaster_Fire (edict_t *ent)
 {
+	/*JMC commented out for ease of remembering what old code was
 	float	rotation;
 	vec3_t	offset;
 	int		effect;
@@ -985,15 +1015,17 @@ void Weapon_HyperBlaster_Fire (edict_t *ent)
 		gi.sound(ent, CHAN_AUTO, gi.soundindex("weapons/hyprbd1a.wav"), 1, ATTN_NORM, 0);
 		ent->client->weapon_sound = 0;
 	}
-
+	*/
 }
 
 void Weapon_HyperBlaster (edict_t *ent)
 {
+	/*JMC commented out for ease of remembering what old code was
 	static int	pause_frames[]	= {0};
 	static int	fire_frames[]	= {6, 7, 8, 9, 10, 11, 0};
 
 	Weapon_Generic (ent, 5, 20, 49, 53, pause_frames, fire_frames, Weapon_HyperBlaster_Fire,NULL,NULL,false);
+	*/
 }
 
 /*
@@ -1006,6 +1038,7 @@ MACHINEGUN / CHAINGUN
 
 void Machinegun_Fire (edict_t *ent)
 {
+	
 	int	i;
 	vec3_t		start;
 	vec3_t		forward, right;
@@ -1088,6 +1121,7 @@ void Machinegun_Fire (edict_t *ent)
 		ent->s.frame = FRAME_attack1 - (int) (random()+0.25);
 		ent->client->anim_end = FRAME_attack8;
 	}
+	
 }
 
 void Weapon_Machinegun (edict_t *ent)
@@ -1100,6 +1134,54 @@ void Weapon_Machinegun (edict_t *ent)
 
 void Chaingun_Fire (edict_t *ent)
 {
+
+	vec3_t		start;
+	vec3_t		forward, right;
+	vec3_t		offset;
+	int			damage = 4;
+	int			kick = 9;
+
+	if (ent->client->ps.gunframe == 9)
+	{
+		ent->client->ps.gunframe++;
+		return;
+	}
+
+	AngleVectors (ent->client->v_angle, forward, right, NULL);
+
+	VectorScale (forward, -3, ent->client->kick_origin);
+	ent->client->kick_angles[0] = -3;
+
+	VectorSet(offset, 0, 8,  ent->viewheight-8);
+	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+
+	if (is_quad)
+	{
+		damage *= 4;
+		kick *= 4;
+	}
+
+	if (deathmatch->value)
+		fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_DEATHMATCH_SHOTGUN_COUNT, MOD_SHOTGUN);
+	else
+		fire_shotgun (ent, start, forward, damage, kick, 500, 500, DEFAULT_SHOTGUN_COUNT, MOD_SHOTGUN);
+
+	// send muzzle flash
+	gi.WriteByte (svc_muzzleflash);
+	gi.WriteShort (ent-g_edicts);
+	gi.WriteByte (MZ_SHOTGUN | is_silenced);
+	gi.multicast (ent->s.origin, MULTICAST_PVS);
+
+	ent->client->ps.gunframe++;
+	PlayerNoise(ent, start, PNOISE_WEAPON);
+
+	if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
+		ent->client->pers.inventory[ent->client->ammo_index]--;
+
+
+
+
+	/*JMC commented out for ease of remembering what old code was
 	int			i;
 	int			shots;
 	vec3_t		start;
@@ -1195,6 +1277,7 @@ void Chaingun_Fire (edict_t *ent)
 
 	for (i=0 ; i<shots ; i++)
 	{
+
 		// get start / end positions
 		AngleVectors (ent->client->v_angle, forward, right, up);
 		r = 7 + crandom()*4;
@@ -1215,15 +1298,22 @@ void Chaingun_Fire (edict_t *ent)
 
 	if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
 		ent->client->pers.inventory[ent->client->ammo_index] -= shots;
+		*/
 }
 
 
 void Weapon_Chaingun (edict_t *ent)
 {
+		static int	pause_frames[]	= {22, 28, 34, 0};
+	static int	fire_frames[]	= {8, 9, 0};
+
+	Weapon_Generic (ent, 7, 10, 36, 39, pause_frames, fire_frames, Chaingun_Fire,NULL,NULL,false);
+	/*JMC commented out for ease of remembering what old code was
 	static int	pause_frames[]	= {38, 43, 51, 61, 0};
 	static int	fire_frames[]	= {5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 0};
 
 	Weapon_Generic (ent, 4, 31, 61, 64, pause_frames, fire_frames, Chaingun_Fire,NULL,NULL,false);
+	*/
 }
 
 
@@ -1286,12 +1376,13 @@ void Weapon_Shotgun (edict_t *ent)
 	static int	pause_frames[]	= {22, 28, 34, 0};
 	static int	fire_frames[]	= {8, 9, 0};
 
-	Weapon_Generic (ent, 7, 18, 36, 39, pause_frames, fire_frames, weapon_shotgun_fire,NULL,NULL,false);
+	Weapon_Generic (ent, 7, 14, 36, 39, pause_frames, fire_frames, weapon_shotgun_fire,NULL,NULL,false);
 }
 
 
 void weapon_supershotgun_fire (edict_t *ent)
 {
+	/*JMC commented out for ease of remembering what old code was
 	vec3_t		start;
 	vec3_t		forward, right;
 	vec3_t		offset;
@@ -1333,15 +1424,20 @@ void weapon_supershotgun_fire (edict_t *ent)
 
 	if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
 		ent->client->pers.inventory[ent->client->ammo_index] -= 2;
+*/
+
 }
 
 void Weapon_SuperShotgun (edict_t *ent)
 {
+	/*JMC commented out for ease of remembering what old code was
 	static int	pause_frames[]	= {29, 42, 57, 0};
 	static int	fire_frames[]	= {7, 0};
 
 	Weapon_Generic (ent, 6, 17, 57, 61, pause_frames, fire_frames, weapon_supershotgun_fire,NULL,NULL,false);
-}
+	/*JMC commented out for ease of remembering what old code was
+*/
+	}
 
 
 
@@ -1355,6 +1451,7 @@ RAILGUN
 
 void weapon_railgun_fire (edict_t *ent)
 {
+	/*JMC commented out for ease of remembering what old code was
 	vec3_t		start;
 	vec3_t		forward, right;
 	vec3_t		offset;
@@ -1398,15 +1495,18 @@ void weapon_railgun_fire (edict_t *ent)
 
 	if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
 		ent->client->pers.inventory[ent->client->ammo_index]--;
+	*/
 }
 
 
 void Weapon_Railgun (edict_t *ent)
 {
+	/*JMC commented out for ease of remembering what old code was
 	static int	pause_frames[]	= {56, 0};
 	static int	fire_frames[]	= {4, 0};
 
 	Weapon_Generic (ent, 3, 18, 56, 61, pause_frames, fire_frames, weapon_railgun_fire,NULL,NULL,false);
+	*/
 }
 
 
@@ -1420,6 +1520,7 @@ BFG10K
 
 void weapon_bfg_fire (edict_t *ent)
 {
+	/*JMC commented out for ease of remembering what old code was
 	vec3_t	offset, start;
 	vec3_t	forward, right;
 	int		damage;
@@ -1432,6 +1533,7 @@ void weapon_bfg_fire (edict_t *ent)
 
 	if (ent->client->ps.gunframe == 9)
 	{
+		
 		// send muzzle flash
 		gi.WriteByte (svc_muzzleflash);
 		gi.WriteShort (ent-g_edicts);
@@ -1474,14 +1576,17 @@ void weapon_bfg_fire (edict_t *ent)
 
 	if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
 		ent->client->pers.inventory[ent->client->ammo_index] -= 50;
+		*/
 }
 
 void Weapon_BFG (edict_t *ent)
 {
+	/*JMC commented out for remembering
 	static int	pause_frames[]	= {39, 45, 50, 55, 0};
 	static int	fire_frames[]	= {9, 17, 0};
 
 	Weapon_Generic (ent, 8, 32, 55, 58, pause_frames, fire_frames, weapon_bfg_fire,NULL,NULL,false);
+	*/
 }
 
 

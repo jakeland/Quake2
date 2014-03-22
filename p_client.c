@@ -321,8 +321,8 @@ void ClientObituary (edict_t *self, edict_t *inflictor, edict_t *attacker)
 				message2 = "'s chaingun";
 				break;
 			case MOD_GRENADE:
-				message = "was popped by";
-				message2 = "'s grenade";
+				message = "couldn't avoid";
+				message2 = "'s grenades";
 				break;
 			case MOD_G_SPLASH:
 				message = "was shredded by";
@@ -1616,7 +1616,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 
 	pm_passent = ent;
 	
-	//JMC All this below deals with Dbl-Jumping
+//JMC added to deal with double jump
 
 	
 if (ent->groundentity)
@@ -1666,6 +1666,8 @@ if (ent->groundentity && ent->dbljumped == true)
 
 		// set up for pmove
 		memset (&pm, 0, sizeof(pm));
+		
+
 
 		if (ent->movetype == MOVETYPE_NOCLIP)
 			client->ps.pmove.pm_type = PM_SPECTATOR;
